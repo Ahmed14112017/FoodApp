@@ -7,3 +7,42 @@
 .bg-overlay{
     background-image: linear-gradient(45deg,rgba(47,140,96,.5),rgba(0,0,0,.5));
 }
+.sidebar-container .ps-sidebar-container{
+background-color: #1F263E !important;
+height: 100vh;
+}
+.sidebar-container .ps-menu-icon{
+    color: #fff;
+}
+.sidebar-container .ps-menu-label{
+    color: #fff;
+}
+.sidebar-container .ps-menu-button:hover{
+    background-color: rgba(28, 49, 63,0.6)!important;
+}
+.sidebar-container .first-item .ps-menu-button:hover{
+    background-color:transparent !important;
+}
+
+.header-container{
+    background-color: #009247 !important;
+    background-image: url(../src/assets/images/header-circles.svg);
+    background-position: center center;
+    background-size: cover;
+    color: #fff;
+}
+.sr-only{
+    position: absolute;
+width: 1px;
+height: 1px;
+padding: 0;
+margin: -1px;
+overflow: hidden;
+clip: rect(0, 0, 0, 0);
+white-space: nowrap;
+border-width: 0;
+}
+.image-list{
+    width: 50px;
+    height: 50px;
+}
