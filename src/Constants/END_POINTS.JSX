@@ -20,7 +20,7 @@ export const USERS_URL={
     getlist:`${BASE_REC}`,
     delete:(id)=>`${BASE_REC}/${id}`,
  }
- const BASE_USERREC=`${BASE_URL}/userRecipe`
+ const BASE_USERREC=`${BASE_URL}/user/`
  export const USERREC_URL={
     getlist:`${BASE_USERREC}`,
     delete:(id)=>`${BASE_USERREC}/${id}`

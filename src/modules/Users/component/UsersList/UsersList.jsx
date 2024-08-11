@@ -52,7 +52,7 @@ const [userrecipe,Setuserrecipe]=useState([])
           <td> {item.tag.name} </td>
           <td className=''> 
           <i className='fa fa-edit text-warning mx-3' ></i>
-          <i className='fa fa-trash text-danger' onClick={()=>handleShow(item.id)}></i>
+          <i className='fa fa-trash text-danger'></i>
             </td>
           
           </tr>

@@ -14,7 +14,7 @@ import CategoriesList from './modules/Categories/component/CategoriesList'
 import UsersList from './modules/Users/component/UsersList/UsersList'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import {  useState } from 'react'
+import {  useEffect, useState } from 'react'
 import { jwtDecode } from 'jwt-decode'
 import ProtectedRoute from './modules/Shared/component/ProtectedRoute/ProtectedRoute'
 
@@ -24,9 +24,14 @@ function App() {
     const getdata=localStorage.getItem("token")
     const readdata=jwtDecode(getdata);
     console.log(readdata)
-    Setlogindata(readdata)
+    Setlogindata()
     console.log(logindata)
   }
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      savelogindata()
+    }
+  })
   
  const Routes=createBrowserRouter([
   {
@@ -44,7 +49,7 @@ function App() {
       {
         path:"dashboard",
         
-        element:<ProtectedRoute logindata={logindata}>
+        element:<ProtectedRoute>
           <MasterLayout  logindata={logindata}/>
           </ProtectedRoute>,
         errorElement:<Notfound />,
@@ -58,6 +63,7 @@ function App() {
       }
     ]
   )
+  
   return(
     <>
     <ToastContainer />
