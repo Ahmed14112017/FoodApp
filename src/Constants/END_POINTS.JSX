@@ -12,7 +12,8 @@ export const USERS_URL={
  const BASE_CAT=`${BASE_URL}/Category`
  export const CATEGORIES_URL={
     getlist:`${BASE_CAT}`,
-    delete:(id)=>`${BASE_CAT}/${id}`
+    delete:(id)=>`${BASE_CAT}/${id}`,
+    create:`${BASE_CAT}`
  }
 
  const BASE_REC=`${BASE_URL}/Recipe`
@@ -20,10 +21,12 @@ export const USERS_URL={
     getlist:`${BASE_REC}`,
     delete:(id)=>`${BASE_REC}/${id}`,
  }
- const BASE_USERREC=`${BASE_URL}/user/`
+ const BASE_USERREC=`${BASE_URL}/users/`
  export const USERREC_URL={
     getlist:`${BASE_USERREC}`,
     delete:(id)=>`${BASE_USERREC}/${id}`
  }
+
+export const GETALL_TAGES=`${BASE_URL}/tag/`
 
 export const IMAGE_URL="https://upskilling-egypt.com:3006"

@@ -9,7 +9,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import DeleteConfirmation from '../../Shared/component/DeleteConfirmation/DeleteConfirmation'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 export default function RecipesList() {
+  const navigate=useNavigate()
   const [recipes, setRecipes] = useState([])
   const [show, setShow] = useState(false);
   const [recipesid,Setrecipesid]=useState(0)
@@ -64,12 +66,12 @@ console.log(error)
           </Button>
         </Modal.Footer>
       </Modal>
-     <div className="title p-3 d-flex justify-content-between">
+     <div className="title p-3 d-flex justify-content-between align-items-center">
       <div className="title-info">
       <h3>Recipe Table Details</h3>
       <span>You can check all details</span>
       </div>
-   <button className="btn btn-success">Add New item</button>
+   <button className="btn btn-success" onClick={()=>navigate("/dashboard/Recipe-data")}>Add New item</button>
    </div>
    <div className="table-container">
    <table className="table">

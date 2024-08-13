@@ -9,13 +9,19 @@ import DeleteConfirmation from '../../Shared/component/DeleteConfirmation/Delete
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import NoData from '../../Shared/component/NoData/NoData'
+import { useForm } from 'react-hook-form'
 
 
 
 export default function CategoriesList() {
+  const {register,handleSubmit,formState:{errors}}=useForm()
+ 
   const [Categoriesdata,SetCategoriesdata]=useState([])
   const [show, setShow] = useState(false);
+  const [showAdd, SetshowAdd] = useState(false);
   const handleClose = () => setShow(false);
+  const handleCloseAdd=()=>SetshowAdd(false)
+  const handleshowAdd = () => SetshowAdd(true);
   const [cat,Setcat]=useState(0)
 
   const handleShow = (id) => {
@@ -50,6 +56,17 @@ export default function CategoriesList() {
   useEffect(()=>{
     getdata()
   },[])
+  const Addcategory=async(data)=>{
+    try{
+      const response=await axios.post(CATEGORIES_URL.create,data,{headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}})
+      console.log(response)
+      handleCloseAdd()
+      getdata()
+      toast.success("item added successfully")
+    }catch(error){
+      console.log(error)
+    }
+  }
   return (
     <>
  
@@ -58,9 +75,8 @@ export default function CategoriesList() {
     description={"You can now add your items that any user can order it from the Application and you can edit"} 
    image={recipesimg}
     />
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} >
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
          <DeleteConfirmation deleteitem={"category"} />
@@ -71,12 +87,28 @@ export default function CategoriesList() {
           </Button>
         </Modal.Footer>
       </Modal>
-    <div className="title p-3 d-flex justify-content-between">
+      <Modal show={showAdd} onHide={handleCloseAdd}>
+        <Modal.Header closeButton>
+        </Modal.Header>
+        <Modal.Body>
+         <form onSubmit={handleSubmit(Addcategory)}>
+         <input type="text" className="form-control my-3"  placeholder="Enter your category" {...register("name",{require:"Category Name is Require"})}/>
+         {errors.name&&<span>{errors.name.massege}</span>}
+         <Button  type='submit' variant="danger" >save</Button>
+
+         </form>
+          </Modal.Body>
+        <Modal.Footer>
+          
+        </Modal.Footer>
+      </Modal>
+      
+    <div className="title p-3 d-flex justify-content-between align-items-center">
       <div className="title-info">
       <h3>Categories Table Details</h3>
       <span>You can check all details</span>
       </div>
-   <button className="btn btn-success">Add New Category</button>
+   <button className="btn btn-success" onClick={handleshowAdd}>Add New Category</button>
    </div>
     <div className='table-container p-3'>
      <table className="table">
