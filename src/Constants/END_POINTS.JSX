@@ -5,7 +5,8 @@ export const USERS_URL={
     register:`${BASE_USERS}/Register`,
     delete:(id)=>`${BASE_USERS}/${id}`,
     resetRequest:`${BASE_USERS}/Reset/Request`,
-    reset:`${BASE_USERS}/Reset`
+    reset:`${BASE_USERS}/Reset`,
+    verify:`${BASE_USERS}/verify`
 
 }
 

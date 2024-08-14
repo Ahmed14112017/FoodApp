@@ -61,7 +61,7 @@ const navigate=useNavigate()
   </div>
   {errors.password&&<p className='text-danger'>{errors.password.message}</p>}
   <div className='d-flex justify-content-between py-2'>
-    <Link  className='text-decoration-none text-muted'>Register Now ?</Link>
+    <Link to="/register" className='text-decoration-none text-muted'>Register Now ?</Link>
     <Link  to="/forget-password"className='text-decoration-none text-success'>Forget Pasword ?</Link>
   </div>
   <button type='submit' className='btn btn-success w-100' >Log in</button>
