@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import AuthLayout from './modules/Shared/component/AuthLayout/AuthLayout';
 import Login from './modules/Authentication/component/Login/Login';
@@ -23,7 +23,7 @@ import Favorites from './modules/recipes/component/Favorites/Favorites';
 function App() {
   
 
-  const Routes = createBrowserRouter([
+  const Routes = createHashRouter([
     {
       path: "",
       element: <AuthLayout />,
