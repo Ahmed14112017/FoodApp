@@ -21,11 +21,19 @@ export const USERS_URL={
  export const RECIPE_URL={
     getlist:`${BASE_REC}`,
     delete:(id)=>`${BASE_REC}/${id}`,
+    create:`${BASE_REC}/`
  }
  const BASE_USERREC=`${BASE_URL}/users/`
  export const USERREC_URL={
     getlist:`${BASE_USERREC}`,
     delete:(id)=>`${BASE_USERREC}/${id}`
+ }
+
+ const BASE_USERRECIPEFAV=`${BASE_URL}/userRecipe`
+ export const USERRECIPEFAV_url={
+   getlist:`${BASE_USERRECIPEFAV}`,
+   addfavorites:`${BASE_USERRECIPEFAV}`,
+   delete:(id)=>`${ BASE_USERRECIPEFAV}/${id}`
  }
 
 export const GETALL_TAGES=`${BASE_URL}/tag/`

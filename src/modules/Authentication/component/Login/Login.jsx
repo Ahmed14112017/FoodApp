@@ -1,12 +1,14 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import styles from "/src/modules/Authentication/component/auth.module.css"
 import { Emailvalitaion } from '../../../../Constants/VALIDATION.JSX';
+import { Authcontext } from '../../../../Authcontext/Authcontext';
 
-export default function Login({savedata}) {
+export default function Login() {
+  const{savelogindata}=useContext(Authcontext)
 const navigate=useNavigate()
   const {
     register,
@@ -19,7 +21,7 @@ const navigate=useNavigate()
       let response=await axios.post("https://upskilling-egypt.com:3006/api/v1/Users/Login",data)
       console.log(response)
       localStorage.setItem("token",response.data.token)
-      savedata()
+      savelogindata()
       navigate("/dashboard");
       toast.success("log in successfully")
       

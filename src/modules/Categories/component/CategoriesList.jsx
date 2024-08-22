@@ -10,27 +10,34 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import NoData from '../../Shared/component/NoData/NoData'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
+
 
 
 
 export default function CategoriesList() {
+  // const param=useParams()
   const {register,handleSubmit,formState:{errors}}=useForm()
+  const navigate=useNavigate()
  
   const [Categoriesdata,SetCategoriesdata]=useState([])
   const [show, setShow] = useState(false);
   const [showAdd, SetshowAdd] = useState(false);
+  const [Arrayofpage, SetArrayofpage] = useState([]);
   const handleClose = () => setShow(false);
   const handleCloseAdd=()=>SetshowAdd(false)
   const handleshowAdd = () => SetshowAdd(true);
   const [cat,Setcat]=useState(0)
-
+  const [namevalue,Setnamevalue]=useState("")
   const handleShow = (id) => {
     Setcat(id)
     setShow(true);
   }
   const deleteitem=async()=>{
     try{
-      const response=await axios.delete(CATEGORIES_URL.delete(cat),{headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}})
+      const response=await axios.delete(CATEGORIES_URL.delete(cat),{headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}},
+    )
       console.log(response)
       toast.success("deleted successfully")
       handleClose()
@@ -43,18 +50,28 @@ export default function CategoriesList() {
       
     }
   }
-  const getdata=async()=>{
+  const getdata=async(pagesize,pageNumber,nameinput)=>{
     try{
-      const response=await axios.get(CATEGORIES_URL.getlist,{headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}})
+      const response=await axios.get(CATEGORIES_URL.getlist,{headers:{Authorization:`Bearer ${localStorage.getItem("token")}`},
+      params:{pageSize:pagesize,pageNumber:pageNumber,name:nameinput}}) 
       SetCategoriesdata(response.data.data)
+      SetArrayofpage(Array(response.data.totalNumberOfPages).fill().map((_,i)=>i+1))
+
       console.log(Categoriesdata)
+
     }
     catch(error){
       console.log(error)
     }
   }
+
+  const getValuebyName=(e)=>{
+    Setnamevalue(e.target.value)
+    getdata(5,1,e.target.value)
+  }
   useEffect(()=>{
-    getdata()
+    {logindata?.userGroup!=="SystemUser"?getdata(5,1,""):navigate("/login")}
+   
   },[])
   const Addcategory=async(data)=>{
     try{
@@ -111,6 +128,7 @@ export default function CategoriesList() {
    <button className="btn btn-success" onClick={handleshowAdd}>Add New Category</button>
    </div>
     <div className='table-container p-3'>
+      <input type='text' placeholder='search by Name' className='form-control' onChange={getValuebyName}  />
      <table className="table">
   <thead>
     <tr>
@@ -138,6 +156,28 @@ export default function CategoriesList() {
    
   </tbody>
 </table>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+      
+    </li>
+    {Arrayofpage.map((pageno)=>{
+        return(
+          <li key={pageno} class="page-item" onClick={()=>getdata(5,pageno)}><a class="page-link">{pageno}</a></li>
+        )
+      })}
+    
+    
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
     </div>
     </>
    

@@ -6,9 +6,11 @@ import { Passwordvalitaion } from '../../../../Constants/VALIDATION.JSX'
 import axios from 'axios'
 import { USERS_URL } from '../../../../Constants/END_POINTS.JSX'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 export default function Register() {
   const[showpassword,Setshowpassword]=useState(false)
+  const navigate=useNavigate()
   const Passwordshown=()=>{
     Setshowpassword(!showpassword)
   }
@@ -16,9 +18,11 @@ export default function Register() {
   const onSubmit = async(data)=>{
     const registerdata=AppendToFormData(data)
     console.log(registerdata)
+    navigate("/verify-account")
     try{
       const response=await axios.post(USERS_URL.register,registerdata)
       toast.success(response.data.message)
+      
     }catch(error){
       toast.error(error.response.data.message)
     }

@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 .auth-container{
     background-image: url(./assets//images/authphoto.png);
     background-position: center center;

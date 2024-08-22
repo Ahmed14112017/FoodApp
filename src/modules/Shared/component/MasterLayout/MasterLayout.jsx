@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Sidebar from "../Sidebar/Sidebar"
 import Navbar from "../Navbar/Navbar"
 import { Outlet } from 'react-router-dom'
 
-export default function MasterLayout({logindata}) {
+export default function MasterLayout() {
   return (
     <>
       
@@ -11,8 +11,8 @@ export default function MasterLayout({logindata}) {
       <div className=' '>
       <Sidebar/>
       </div>
-      <div className=' w-100 '>
-        <Navbar logindata={logindata} />
+      <div className='w-100'>
+        <Navbar />
         <Outlet />
       </div>
       </div>

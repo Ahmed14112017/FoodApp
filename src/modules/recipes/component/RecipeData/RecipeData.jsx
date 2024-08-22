@@ -5,15 +5,39 @@ import { useNavigate } from 'react-router-dom'
 import { GETALL_TAGES } from '../../../../Constants/END_POINTS.JSX'
 import NoData from '../../../Shared/component/NoData/NoData'
 import { CATEGORIES_URL } from '../../../../Constants/END_POINTS.JSX'
+import { RECIPE_URL } from '../../../../Constants/END_POINTS.JSX'
+import { toast } from 'react-toastify'
 
 export default function RecipeData() {
-    const{register,handleSubmit,formState:{errors}}=useForm()
+    const{register,handleSubmit,getValues,formState:{errors},reset}=useForm()
     const [Categoriesdata,SetCategoriesdata]=useState([])
+    // const [addrecipesdata,Setaddrecipesdata]=useState([])
 
     const [tags,Settags]=useState([])
 
-    const submitAddrecipe=(data)=>{
-        console.log(data)
+    const AppendToFormData=(data)=>{
+      const formData = new FormData();
+      formData.append("name",data.name)
+      formData.append("description",data.description)
+      formData.append("price",data.price)
+      formData.append("tagId",data.tagId)
+      formData.append("recipeImage",data.recipeImage[0])
+      formData.append("categoriesIds",data.categoriesIds)
+      return formData
+    }
+
+    const submitAddrecipe=async(data)=>{
+        const recipedata=AppendToFormData(data)
+        try{
+          const response = await axios.post(RECIPE_URL.create, recipedata,{headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}})
+          console.log(response.data)
+          navigate("/dashboard/resipesList")
+          toast.success(response.data.message)
+          localStorage.removeItem("recipe-data");
+
+        }catch(error){
+          console.log(error.response.data)
+        }
     }
     const getdata=async()=>{
         try{
@@ -22,12 +46,10 @@ export default function RecipeData() {
           console.log(Categoriesdata)
         }
         catch(error){
-          console.log(error)
+          console.log(error)  
         }
       }
-      useEffect(()=>{
-        getdata()
-      },[])
+      
 const Getalltags=async()=>{
     try{
         const response=await axios.get(GETALL_TAGES,{headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}})
@@ -38,10 +60,28 @@ const Getalltags=async()=>{
     }
 }
 useEffect(()=>{
-    Getalltags()
+  const gettagandcategorys=async()=>{
+await  getdata()
+await Getalltags()
+const stordata=JSON.parse(localStorage.getItem(("recipe-data")))
+reset(stordata)
+  }
+    gettagandcategorys()
+   
 },[])
 
     const navigate=useNavigate()
+   
+    useEffect(()=>{
+       const beforeunload=(e)=>{
+        e.preventDefault()
+        localStorage.setItem("recipe-data",JSON.stringify(getValues()))
+       }
+       window.addEventListener('beforeunload',beforeunload)
+       return()=>{
+        window.removeEventListener('beforeunload',beforeunload)
+       }
+    },[])
   return (
    <>
     <div className='d-flex justify-content-between align-items-center px-2 m-3 'style={{backbroundColor:"#F5F5F5"}}>
@@ -86,7 +126,11 @@ useEffect(()=>{
    <input type="file" className="form-control"  placeholder="upload image" {...register("recipeImage",{required:"recipeImage is require"})}/>   
    {errors.recipeImage&&<span className='text-danger'>{errors.recipeImage.message}</span>} 
 
-   <button className='btn btn-outline-success p-x m-2'>cancel</button>
+   <button className='btn btn-outline-success p-x m-2' type='button' onClick={()=>{
+    navigate(-1);
+    localStorage.removeItem("recipe-data");
+    
+    }}>cancel</button>
    <button className='btn btn-success px-3 m-2'>save</button>
     </form>
    </>

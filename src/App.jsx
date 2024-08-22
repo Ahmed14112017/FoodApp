@@ -18,24 +18,10 @@ import {jwtDecode} from 'jwt-decode'; // Correct import for jwt-decode
 import ProtectedRoute from './modules/Shared/component/ProtectedRoute/ProtectedRoute';
 import RecipeData from './modules/recipes/component/RecipeData/RecipeData';
 import VerifyAccount from './modules/Authentication/component/VerifyAccount/VerifyAccount';
+import Favorites from './modules/recipes/component/Favorites/Favorites';
 
 function App() {
-  const [logindata, Setlogindata] = useState(null);
-
-  const savelogindata = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decodedData = jwtDecode(token);
-      Setlogindata(decodedData);
-      console.log(decodedData); // Log decoded data to verify correctness
-    }
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      savelogindata();
-    }
-  }, []); // Empty dependency array to run only on initial mount
+  
 
   const Routes = createBrowserRouter([
     {
@@ -43,8 +29,8 @@ function App() {
       element: <AuthLayout />,
       errorElement: <Notfound />,
       children: [
-        { index: true, element: <Login savedata={savelogindata} /> },
-        { path: 'login', element: <Login savedata={savelogindata} /> },
+        { index: true, element: <Login/> },
+        { path: 'login', element: <Login/> },
         { path: 'forget-password', element: <ForgetPass /> },
         { path: 'rest-password', element: <RestPass /> },
         { path: 'register', element: <Register /> },
@@ -54,8 +40,8 @@ function App() {
     {
       path: "dashboard",
       element: (
-        <ProtectedRoute logindata={logindata}>
-          <MasterLayout logindata={logindata} />
+        <ProtectedRoute>
+          <MasterLayout/>
         </ProtectedRoute>
       ),
       errorElement: <Notfound />,
@@ -65,6 +51,7 @@ function App() {
         { path: "resipesList", element: <RecipesList /> },
         { path: "Recipe-data", element: <RecipeData /> },
         { path: "categoriesList", element: <CategoriesList /> },
+        { path: "favorites", element: <Favorites /> },
         { path: "users", element: <UsersList /> }
       ]
     }
