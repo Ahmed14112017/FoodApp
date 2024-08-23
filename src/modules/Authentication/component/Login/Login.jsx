@@ -24,7 +24,7 @@ const navigate=useNavigate()
       savelogindata()
       navigate("/dashboard");
       toast.success("log in successfully")
-      
+     
     }
     catch(error){
       toast.error(error.response.data.message);

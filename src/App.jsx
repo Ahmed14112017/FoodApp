@@ -13,8 +13,7 @@ import CategoriesList from './modules/Categories/component/CategoriesList';
 import UsersList from './modules/Users/component/UsersList/UsersList';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState } from 'react';
-import {jwtDecode} from 'jwt-decode'; // Correct import for jwt-decode
+
 import ProtectedRoute from './modules/Shared/component/ProtectedRoute/ProtectedRoute';
 import RecipeData from './modules/recipes/component/RecipeData/RecipeData';
 import VerifyAccount from './modules/Authentication/component/VerifyAccount/VerifyAccount';
