@@ -70,7 +70,8 @@ export default function CategoriesList() {
     getdata(5,1,e.target.value)
   }
   useEffect(()=>{
-    {logindata?.userGroup!=="SystemUser"?getdata(5,1,""):navigate("/login")}
+    // {logindata?.userGroup!=="SystemUser"?getdata(5,1,""):navigate("/login")}
+    getdata(5,1,"")
    
   },[])
   const Addcategory=async(data)=>{

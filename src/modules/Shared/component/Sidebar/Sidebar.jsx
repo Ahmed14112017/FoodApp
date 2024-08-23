@@ -7,6 +7,7 @@ export default function Sidebar() {
   const {logindata}=useContext(Authcontext)
   const [collape,Setcollape]=useState(false)
   const navigate=useNavigate()
+  console.log(logindata)
   const toggle=()=>{
     Setcollape(!collape)
   }
@@ -22,14 +23,13 @@ export default function Sidebar() {
     }} src='\src\assets\images\3.png'alt='collape'/> </button>
   <Menu > 
     <MenuItem icon={<i className='fa fa-home'></i>} component={<Link to="home" />}> home</MenuItem>
-    {logindata?.userGroup!=="SystemUser"?(<MenuItem icon={<i className='fa fa-users'></i>} component={<Link to="users" />}> users</MenuItem>
+    {logindata?.userGroup=="SuperAdmin"?(<MenuItem icon={<i className='fa fa-users'></i>} component={<Link to="users" />}> users</MenuItem>
 ):""}
     <MenuItem icon={<i className="fa-solid fa-receipt"></i>} component={<Link to="resipesList" />}> recipes</MenuItem>
-    {logindata?.userGroup=="SystemUser"?(<MenuItem icon={<i className="fa-solid fa-receipt"></i>} component={<Link to="favorites" />}> Favorites</MenuItem>):""}
-    {logindata?.userGroup!=="SystemUser"?(<MenuItem icon={<i className="fa-solid fa-list"></i>}component={<Link to="categoriesList" />}> Categories</MenuItem>
-):""}
+    {logindata?.userGroup!=="SuperAdmin"?(<MenuItem icon={<i className="fa-solid fa-receipt"></i>} component={<Link to="favorites" />}> Favorites</MenuItem>):""}
+    {logindata?.userGroup == "SuperAdmin"?(<MenuItem icon={<i className="fa-solid fa-list"></i>} component={<Link to="categoriesList" />}> Categories</MenuItem>):""}
     <MenuItem onClick={()=>{
-      localStorage.removeItem("token")
+      localStorage.removeItem("token"),
       navigate("/login")}} 
       icon={<i className="fa-solid fa-arrow-right-from-bracket"></i>}> Logout</MenuItem>
   </Menu>
